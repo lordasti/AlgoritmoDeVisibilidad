@@ -1,5 +1,7 @@
 package es.mvera.algoritmo.modelo;
 
+import static java.util.function.Predicate.not;
+
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -28,5 +30,13 @@ public class Product {
 	
 	public boolean algunaTallaTieneStock() {
 		return sizes.stream().anyMatch(Size::tieneStock);
+	}
+
+	public boolean algunaTallaNoEspecialVuelvePronto() {
+		return sizes.stream().filter(not(Size::isSpecial)).anyMatch(Size::isBackSoon);
+	}
+
+	public boolean algunaTallaNoEspecialTieneStock() {
+		return sizes.stream().filter(not(Size::isSpecial)).anyMatch(Size::tieneStock);
 	}
 }
