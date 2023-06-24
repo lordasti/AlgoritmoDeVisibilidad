@@ -12,7 +12,8 @@ public class AlgoritmoDeVisibilidad {
 			return false;
 		}		
 		return (!producto.tieneTallasEspeciales() && !producto.algunaTallaVuelvePronto() && producto.algunaTallaTieneStock()) 
-			|| (!producto.tieneTallasEspeciales() && producto.algunaTallaVuelvePronto());
+			|| (!producto.tieneTallasEspeciales() && producto.algunaTallaVuelvePronto())
+			|| (producto.tieneTallasEspeciales() && producto.algunaTallaEspecialTieneStock() && producto.algunaTallaNoEspecialTieneStock());
 	}
 	
 }
