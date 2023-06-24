@@ -66,8 +66,13 @@ public class AlgoritmoDeVisibilidadTest {
 	}
 	
 	@Test
-	public void deberiaDevolverUnProductoCuandoTieneTallasEspecialesYHayStockDeAlgunaTallaEspecialYNoHayStockDeNingunaTallaNoEspecialPeroAlgunaVuelvePronto() throws Exception {
+	public void unProductoEsVisibleCuandoTieneTallasEspecialesYHayStockDeAlgunaTallaEspecialYNoHayStockDeNingunaTallaNoEspecialPeroAlgunaVuelvePronto() throws Exception {
+		Stock hayStock = Stock.builder().quantity(3).build();
+		Size tallaEspecialConStock = Size.builder().backSoon(false).special(true).stock(hayStock).build();		
+		Size tallaNoEspecialVuelveProntoSinStock = Size.builder().backSoon(true).special(false).build();
+		Product producto = Product.builder().sizes(List.of(tallaEspecialConStock,tallaNoEspecialVuelveProntoSinStock)).build();		
 		
+		assertEquals(true, AlgoritmoDeVisibilidad.esVisible(producto));
 	}
 	
 	@Test
