@@ -39,7 +39,8 @@ public class AlgoritmoDeVisibilidadTest {
 	
 	@Test
 	public void unProductoNoEsVisibleCuandoTieneTallasEspecialesYNoHayNingunaTallaNoEspecialQueVuelvaProntoNiTengaStock() throws Exception {
-		Size tallaEspecial = Size.builder().id(11).productId(1).backSoon(false).special(true).build();		
+		Stock hayStock = Stock.builder().sizeId(11).quantity(3).build();
+		Size tallaEspecial = Size.builder().id(11).productId(1).backSoon(false).special(true).stock(hayStock).build();		
 		Size tallaNoEspecial = Size.builder().id(12).productId(1).backSoon(false).special(false).build();
 		Product producto = Product.builder().id(1).sequence(1).sizes(List.of(tallaEspecial,tallaNoEspecial)).build();		
 		
@@ -48,7 +49,10 @@ public class AlgoritmoDeVisibilidadTest {
 	
 	@Test
 	public void unProductoNoEsVisibleCuandoTieneTallasEspecialesYNoHayNingunaTallaEspecialQueVuelvaProntoNiTengaStock() throws Exception {
+		Size tallaEspecial = Size.builder().id(11).productId(1).backSoon(false).special(true).build();				
+		Product producto = Product.builder().id(1).sequence(1).sizes(List.of(tallaEspecial)).build();		
 		
+		assertEquals(false, AlgoritmoDeVisibilidad.esVisible(producto));
 	}
 	
 	@Test
