@@ -58,9 +58,9 @@ public class ProductoTest {
 	
 	@Test
 	public void deberiaIndicarQueElProductoTieneAlgunaTallaNoEspecialQueVuelveProntoCuandoAlgunaDeLasTallasNoEspecialesVuelvePronto() throws Exception {
-		Size tallaEspecialVuelvePronto = Size.builder().special(true).backSoon(true).build();
+		Size tallaEspecialNoVuelvePronto = Size.builder().special(true).backSoon(false).build();
 		Size tallaNoEspecialVuelvePronto = Size.builder().special(false).backSoon(true).build();
-		Product producto = Product.builder().sizes(List.of(tallaEspecialVuelvePronto,tallaNoEspecialVuelvePronto)).build();
+		Product producto = Product.builder().sizes(List.of(tallaEspecialNoVuelvePronto,tallaNoEspecialVuelvePronto)).build();
 		
 		assertEquals(true, producto.algunaTallaNoEspecialVuelvePronto());
 	}
@@ -77,9 +77,9 @@ public class ProductoTest {
 	@Test
 	public void deberiaIndicarQueElProductoTieneAlgunaTallaNoEspecialQueTieneStockCuandoAlgunaDeLasTallasNoEspecialesTieneStock() throws Exception {
 		Stock hayStock = Stock.builder().quantity(3).build();
-		Size tallaEspecialConStock = Size.builder().special(true).stock(hayStock).build();
+		Size tallaEspecialSinStock = Size.builder().special(true).build();
 		Size tallaNoEspecialConStock = Size.builder().special(false).stock(hayStock).build();
-		Product producto = Product.builder().sizes(List.of(tallaEspecialConStock,tallaNoEspecialConStock)).build();
+		Product producto = Product.builder().sizes(List.of(tallaEspecialSinStock,tallaNoEspecialConStock)).build();
 		
 		assertEquals(true, producto.algunaTallaNoEspecialTieneStock());
 	}
@@ -92,5 +92,43 @@ public class ProductoTest {
 		Product producto = Product.builder().sizes(List.of(tallaEspecialConStock,tallaNoEspecialSinStock)).build();
 		
 		assertEquals(false, producto.algunaTallaNoEspecialTieneStock());
+	}
+	
+	@Test
+	public void deberiaIndicarQueElProductoTieneAlgunaTallaEspecialQueVuelveProntoCuandoAlgunaDeLasTallasEspecialesVuelvePronto() throws Exception {
+		Size tallaEspecialVuelvePronto = Size.builder().special(true).backSoon(true).build();
+		Size tallaNoEspecialVuelvePronto = Size.builder().special(false).backSoon(true).build();
+		Product producto = Product.builder().sizes(List.of(tallaEspecialVuelvePronto,tallaNoEspecialVuelvePronto)).build();
+		
+		assertEquals(true, producto.algunaTallaEspecialVuelvePronto());
+	}
+	
+	@Test
+	public void deberiaIndicarQueElProductoNoTieneAlgunaTallaEspecialQueVuelveProntoCuandoNingunaDeLasTallasEspecialesVuelvePronto() throws Exception {
+		Size tallaEspecialNoVuelvePronto = Size.builder().special(true).backSoon(false).build();
+		Size tallaNoEspecialVuelvePronto = Size.builder().special(false).backSoon(true).build();
+		Product producto = Product.builder().sizes(List.of(tallaEspecialNoVuelvePronto,tallaNoEspecialVuelvePronto)).build();
+		
+		assertEquals(false, producto.algunaTallaEspecialVuelvePronto());
+	}
+	
+	@Test
+	public void deberiaIndicarQueElProductoTieneAlgunaTallaEspecialQueTieneStockCuandoAlgunaDeLasTallasEspecialesTieneStock() throws Exception {
+		Stock hayStock = Stock.builder().quantity(3).build();
+		Size tallaEspecialConStock = Size.builder().special(true).stock(hayStock).build();
+		Size tallaNoEspecialSinStock = Size.builder().special(false).build();
+		Product producto = Product.builder().sizes(List.of(tallaEspecialConStock,tallaNoEspecialSinStock)).build();
+		
+		assertEquals(true, producto.algunaTallaEspecialTieneStock());
+	}
+	
+	@Test
+	public void deberiaIndicarQueElProductoNoTieneAlgunaTallaEspecialQueTieneStockCuandoNingunaDeLasTallasEspecialesTieneStock() throws Exception {
+		Stock hayStock = Stock.builder().quantity(3).build();
+		Size tallaEspecialSinStock = Size.builder().special(true).build();
+		Size tallaNoEspecialConStock = Size.builder().special(false).stock(hayStock).build();
+		Product producto = Product.builder().sizes(List.of(tallaEspecialSinStock,tallaNoEspecialConStock)).build();
+		
+		assertEquals(false, producto.algunaTallaEspecialTieneStock());
 	}
 }

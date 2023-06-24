@@ -39,4 +39,13 @@ public class Product {
 	public boolean algunaTallaNoEspecialTieneStock() {
 		return sizes.stream().filter(not(Size::isSpecial)).anyMatch(Size::tieneStock);
 	}
+
+	public boolean algunaTallaEspecialVuelvePronto() {
+		return sizes.stream().filter(Size::isSpecial).anyMatch(Size::isBackSoon);
+	}
+	
+	public boolean algunaTallaEspecialTieneStock() {
+		return sizes.stream().filter(Size::isSpecial).anyMatch(Size::tieneStock);
+	}
+
 }
