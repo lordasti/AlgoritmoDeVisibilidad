@@ -15,4 +15,8 @@ public class Stock {
 	@Id
 	private final Integer sizeId;
 	private final Integer quantity;
+	
+	public boolean hayStock() {
+		return quantity > 0;
+	}
 }
