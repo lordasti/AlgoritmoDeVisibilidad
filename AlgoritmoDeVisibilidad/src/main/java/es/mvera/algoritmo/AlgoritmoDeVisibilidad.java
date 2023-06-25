@@ -14,18 +14,43 @@ public class AlgoritmoDeVisibilidad {
 	
 	protected static boolean esVisible(Product producto) {				
 		return 
-			(!producto.tieneTallasEspeciales() && 
-				(producto.algunaTallaVuelvePronto() || producto.algunaTallaTieneStock())
-			) 
-			|| 
-			(producto.tieneTallasEspeciales() && 
-				(
-					(producto.algunaTallaEspecialVuelvePronto() && producto.algunaTallaNoEspecialVuelvePronto()) ||
-					(producto.algunaTallaEspecialTieneStock() && producto.algunaTallaNoEspecialTieneStock()) ||
-					(!producto.algunaTallaEspecialTieneStock() && producto.algunaTallaNoEspecialTieneStock() && producto.algunaTallaEspecialVuelvePronto()) ||
-					(producto.algunaTallaEspecialTieneStock() && !producto.algunaTallaNoEspecialTieneStock() && producto.algunaTallaNoEspecialVuelvePronto())
-				)
-			);				
+			elProductoSinTallasEspecialesEsVisible(producto)|| elProductoConTallasEspecialesEsVisible(producto);				
+	}
+
+	private static boolean elProductoConTallasEspecialesEsVisible(Product producto) {
+		return producto.tieneTallasEspeciales() && 
+			(
+				elProductoTieneTantoTallasEspecialesComoNoEspecialesQueVuelvenPronto(producto) ||
+				elProductoTieneTantoTallasEspecialesComoNoEspecialesConStock(producto) ||
+				elProductoNoTieneStockDeTallasEspecialesPeroAlgunaDeEllasVuelveProntoYSiHayStockDeTallasNoEspeciales(producto) ||
+				elProductoNoTieneStockDeTallasNoEspecialesPeroAlgunaDeEllasVuelveProntoYSiHayStockDeTallasEspeciales(producto)
+			);
+	}
+
+	private static boolean elProductoSinTallasEspecialesEsVisible(Product producto) {
+		return !producto.tieneTallasEspeciales() && elProductoVuelveProntoOTieneStock(producto);
+	}
+	
+	private static boolean elProductoNoTieneStockDeTallasNoEspecialesPeroAlgunaDeEllasVuelveProntoYSiHayStockDeTallasEspeciales(Product producto) {
+		return producto.algunaTallaEspecialTieneStock() && !producto.algunaTallaNoEspecialTieneStock() && producto.algunaTallaNoEspecialVuelvePronto();
+	}
+
+	private static boolean elProductoNoTieneStockDeTallasEspecialesPeroAlgunaDeEllasVuelveProntoYSiHayStockDeTallasNoEspeciales(Product producto) {
+		return !producto.algunaTallaEspecialTieneStock() && producto.algunaTallaNoEspecialTieneStock() && producto.algunaTallaEspecialVuelvePronto();
+	}
+
+	private static boolean elProductoTieneTantoTallasEspecialesComoNoEspecialesConStock(Product producto) {
+		return producto.algunaTallaEspecialTieneStock() && producto.algunaTallaNoEspecialTieneStock();
+	}
+
+	private static boolean elProductoTieneTantoTallasEspecialesComoNoEspecialesQueVuelvenPronto(Product producto) {
+		return producto.algunaTallaEspecialVuelvePronto() && producto.algunaTallaNoEspecialVuelvePronto();
+	}
+	
+	
+
+	private static boolean elProductoVuelveProntoOTieneStock(Product producto) {
+		return producto.algunaTallaVuelvePronto() || producto.algunaTallaTieneStock();
 	}
 	
 }
