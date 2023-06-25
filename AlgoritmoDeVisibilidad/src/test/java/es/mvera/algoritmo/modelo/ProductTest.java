@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-public class ProductoTest {
+public class ProductTest {
 	@Test
 	public void deberiaIndicarQueElProductoTieneTallasEspecialesCuandoAlgunaDeLasTallasEsEspecial() throws Exception {
 		Size tallaEspecial = Size.builder().special(true).build();
