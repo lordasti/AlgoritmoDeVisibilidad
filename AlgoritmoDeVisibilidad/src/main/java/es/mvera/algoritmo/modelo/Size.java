@@ -5,9 +5,8 @@ import java.util.Optional;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,21 +21,20 @@ public class Size {
 	
 	@Id
 	@Column(name="ID")
-	private  Integer id;
+	private Integer id;
 	
 	@Column(name="PRODUCTID")
-	private  Integer productId;
+	private Integer productId;
 	
 	@Column(name="BACKSOON")
-	private  boolean backSoon;
+	private boolean backSoon;
 	
 	@Column(name="SPECIAL")
-	private  boolean special;
+	private boolean special;
 	
 	@OneToOne
-	@MapsId
-	@JoinColumn(name = "ID")
-	private  Stock stock;
+	@PrimaryKeyJoinColumn	
+	private Stock stock;
 	
 	public boolean tieneStock() {
 		return Optional.ofNullable(stock).map(Stock::hayStock).orElse(false);

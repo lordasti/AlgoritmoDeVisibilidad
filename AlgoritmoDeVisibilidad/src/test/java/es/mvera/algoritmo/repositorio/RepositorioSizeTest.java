@@ -30,4 +30,15 @@ public class RepositorioSizeTest {
         assertEquals(11, size.getStock().getSizeId());
         assertEquals(0, size.getStock().getQuantity());
     }
+    
+    @Test
+    public void deberiaRecuperarCorrectamenteElObjetoDeLaBDQueNoTieneStock() {
+    	Size size = repositorioSize.findById(21).orElseThrow();
+    	        
+        assertEquals(21, size.getId());
+        assertEquals(2, size.getProductId());
+        assertEquals(false, size.isBackSoon());
+        assertEquals(false, size.isSpecial());
+        assertEquals(null,size.getStock());
+    }
 }
