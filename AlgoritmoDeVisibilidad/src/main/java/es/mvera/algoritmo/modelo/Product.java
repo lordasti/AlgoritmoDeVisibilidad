@@ -4,21 +4,32 @@ import static java.util.function.Predicate.not;
 
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class Product { 
 	@Id
-	private final Integer id; 
-	private final Integer sequence;
-	private final List<Size> sizes;
+	@Column(name="ID")
+	private Integer id;
+
+	@Column(name="SEQUENCE")
+	private Integer sequence;
+	
+	@OneToMany
+	@JoinColumn(name = "PRODUCTID")
+	private List<Size> sizes;
 	
 	public boolean tieneTallasEspeciales() {
 		return sizes.stream().anyMatch(Size::isSpecial);
