@@ -5,12 +5,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import es.mvera.algoritmo.modelo.Product;
 import es.mvera.algoritmo.modelo.Size;
 import es.mvera.algoritmo.modelo.Stock;
+import es.mvera.algoritmo.repositorio.RepositorioProduct;
 
+@DataJpaTest
 public class AlgoritmoDeVisibilidadTest {
+	
+	@Autowired
+	private RepositorioProduct repositorioProduct;
 
 	@Test
 	public void unProductoNoEsVisibleCuandoNoTieneTallasEspecialesNiNingunaTallaVuelveProntoNiNingunaTallaTieneStock() throws Exception {		
@@ -92,5 +99,15 @@ public class AlgoritmoDeVisibilidadTest {
 		Product producto = Product.builder().sizes(List.of(tallaEspecialVuelvePronto,tallaNoEspecialVuelvePronto)).build();		
 		
 		assertEquals(true, AlgoritmoDeVisibilidad.esVisible(producto));
+	}
+	
+	@Test
+	public void deberiaDevolverLosProductosEnElOrdenCorrecto() throws Exception {				
+		List<Product> productosVisibles = AlgoritmoDeVisibilidad.obtenerListaDeProductosVisibles(repositorioProduct.findAll());		
+		
+		assertEquals(3, productosVisibles.size());
+		assertEquals(5, productosVisibles.get(0).getId());
+		assertEquals(1, productosVisibles.get(1).getId());
+		assertEquals(3, productosVisibles.get(2).getId());
 	}
 }
