@@ -12,18 +12,20 @@ public class AlgoritmoDeVisibilidad {
 		return productos.stream().filter(AlgoritmoDeVisibilidad::esVisible).sorted(Comparator.comparing(Product::getSequence)).toList();
 	}
 	
-	protected static boolean esVisible(Product producto) {
-		if((!producto.tieneTallasEspeciales() && !producto.algunaTallaVuelvePronto() && !producto.algunaTallaTieneStock())
-			|| (producto.tieneTallasEspeciales() && !producto.algunaTallaNoEspecialVuelvePronto() && !producto.algunaTallaNoEspecialTieneStock())
-			|| (producto.tieneTallasEspeciales() && !producto.algunaTallaEspecialVuelvePronto() && !producto.algunaTallaEspecialTieneStock())) {
-			return false;
-		}		
-		return (!producto.tieneTallasEspeciales() && !producto.algunaTallaVuelvePronto() && producto.algunaTallaTieneStock()) 
-			|| (!producto.tieneTallasEspeciales() && producto.algunaTallaVuelvePronto())
-			|| (producto.tieneTallasEspeciales() && producto.algunaTallaEspecialTieneStock() && producto.algunaTallaNoEspecialTieneStock())
-			|| (producto.tieneTallasEspeciales() && producto.algunaTallaEspecialTieneStock() && producto.algunaTallaNoEspecialVuelvePronto())
-			|| (producto.tieneTallasEspeciales() && producto.algunaTallaEspecialVuelvePronto() && producto.algunaTallaNoEspecialTieneStock())
-			|| (producto.tieneTallasEspeciales() && producto.algunaTallaEspecialVuelvePronto() && producto.algunaTallaNoEspecialVuelvePronto());
+	protected static boolean esVisible(Product producto) {				
+		return 
+			(!producto.tieneTallasEspeciales() && 
+				(producto.algunaTallaVuelvePronto() || producto.algunaTallaTieneStock())
+			) 
+			|| 
+			(producto.tieneTallasEspeciales() && 
+				(
+					(producto.algunaTallaEspecialVuelvePronto() && producto.algunaTallaNoEspecialVuelvePronto()) ||
+					(producto.algunaTallaEspecialTieneStock() && producto.algunaTallaNoEspecialTieneStock()) ||
+					(!producto.algunaTallaEspecialTieneStock() && producto.algunaTallaNoEspecialTieneStock() && producto.algunaTallaEspecialVuelvePronto()) ||
+					(producto.algunaTallaEspecialTieneStock() && !producto.algunaTallaNoEspecialTieneStock() && producto.algunaTallaNoEspecialVuelvePronto())
+				)
+			);				
 	}
 	
 }
